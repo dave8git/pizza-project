@@ -52,14 +52,17 @@
     menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
   };
 
-  class Product{
+  class Product {
     constructor(id, data) {
       const thisProduct = this;
       thisProduct.id = id;
       thisProduct.data = data;
       thisProduct.renderInMenu();
+      thisProduct.getElements();
       thisProduct.initAccordion();
-      console.log('new Product:', thisProduct);
+      thisProduct.initOrderForm();
+      thisProduct.processOrder();
+      // console.log('new Product:', thisProduct);
     }
     renderInMenu() {
       const thisProduct = this;
@@ -67,40 +70,64 @@
       thisProduct.element = utils.createDOMFromHTML(generatedHTML); /* create element using utils.createElementFromHTML */
       const menuContainer = document.querySelector(select.containerOf.menu);
       menuContainer.appendChild(thisProduct.element); /* add element to menu */
-      console.log('menuContainer', menuContainer);
-      console.log('generatedHTML', generatedHTML);
     }
-    initAccordion(){
+    getElements() {
+      const thisProduct = this;
+      thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
+      thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
+      thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
+      thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
+      thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+    }
+    initAccordion() {
       const thisProduct = this;
 
-      const clickableTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);/* find the clickable trigger (the element that should react to clicking) */
-      clickableTrigger.addEventListener('click', function(event){ /* START: click event listener to trigger */
+      const clickableTrigger = thisProduct.element.querySelector(select.menuProduct.clickable); /* find the clickable trigger (the element that should react to clicking) */
+      clickableTrigger.addEventListener('click', function (event) {
+        /* START: click event listener to trigger */
         event.preventDefault(); /* prevent default action for event */
-        thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);/* toggle active class on element of thisProduct */
-        console.log('clickable', select.menuProduct.clickable);
+        thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive); /* toggle active class on element of thisProduct */
         const activeProducts = document.querySelectorAll(select.all.menuProductsActive); /* find all active products */
-        for (let activeProduct of activeProducts) {/* START LOOP: for each active product */
-          console.log('jestem');
-          if (activeProduct != thisProduct.element) { /* START: if the active product isn't the element of thisProduct */
-
-            activeProduct.classList.remove(classNames.menuProduct.wrapperActive);/* remove class active for the active product */
-
-        }/* END: if the active product isn't the element of thisProduct */
-
-        }/* END LOOP: for each active product */
-
-      });/* END: click event listener to trigger */
+        for (let activeProduct of activeProducts) {
+          /* START LOOP: for each active product */
+          if (activeProduct != thisProduct.element) {
+            /* START: if the active product isn't the element of thisProduct */
+            activeProduct.classList.remove(classNames.menuProduct.wrapperActive); /* remove class active for the active product */
+          } /* END: if the active product isn't the element of thisProduct */
+        } /* END LOOP: for each active product */
+      }); /* END: click event listener to trigger */
     }
-
+    initOrderForm() {
+      const thisProduct = this;
+      thisProduct.form.addEventListener('submit', function(event){
+        event.preventDefault();
+        thisProduct.processOrder();
+      });
+      for(let input of thisProduct.formInputs){
+        input.addEventListener('change', function(){
+          thisProduct.processOrder();
+        });
+      }
+      thisProduct.cartButton.addEventListener('click', function(event){
+        event.preventDefault();
+        thisProduct.processOrder();
+      });
+      console.log('initOrderForm');
+    }
+    processOrder() {
+      const thisProduct = this;
+      const formData = utils.serializeFormToObject(thisProduct.form);
+      console.log('formData', formData);
+      console.log('processOrder');
+    }
   }
 
   const app = {
-    initMenu: function() {
-      const testProduct = new Product(); //
-
+    initMenu: function () {
+      //const testProduct = new Product(); //
       //console.log('testProduct:', testProduct);
     },
-    initData: function() {
+    initData: function () {
       const thisApp = this;
 
       thisApp.data = dataSource;
@@ -109,7 +136,7 @@
         new Product(productData, thisApp.data.products[productData]);
       }
     },
-    init: function(){
+    init: function () {
       const thisApp = this;
       console.log('*** App starting ***');
       console.log('thisApp:', thisApp);
