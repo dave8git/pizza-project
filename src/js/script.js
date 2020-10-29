@@ -61,8 +61,9 @@
       thisProduct.getElements();
       thisProduct.initAccordion();
       thisProduct.initOrderForm();
+      thisProduct.initAmountWdget();
       thisProduct.processOrder();
-      // console.log('new Product:', thisProduct);
+      console.log('new Product:', thisProduct);
     }
     renderInMenu() {
       const thisProduct = this;
@@ -79,6 +80,7 @@
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
       thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
+      thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
     }
     initAccordion() {
       const thisProduct = this;
@@ -119,6 +121,7 @@
       const thisProduct = this;
       const formData = utils.serializeFormToObject(thisProduct.form);  /* read all data from the form (using utils.serializeFormToObject) and save it to const formData */
       let price = thisProduct.data.price;/* set variable price to equal thisProduct.data.price */
+      price *= thisProduct.amountWidget.value;
         for (let paramId in thisProduct.data.params) { /* START LOOP: for each paramId in thisProduct.data.params */
           const param = thisProduct.data.params[paramId]; /* save the element in thisProduct.data.params with key paramId as const param */
           for (let optionId in param.options) { /* START LOOP: for each optionId in param.options */
@@ -148,10 +151,69 @@
         /* END LOOP: for each paramId in thisProduct.data.params */
 
         thisProduct.priceElem.innerHTML = price; /* set the contents of thisProduct.priceElem to be the value of variable price */
-
-      console.log('formData', formData);
-      console.log('processOrder');
     }
+    initAmountWdget(){
+      const thisProduct = this;
+
+      thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
+      thisProduct.amountWidgetElem.addEventListener('updated', function() {
+        thisProduct.processOrder();
+      });
+
+    }
+  }
+
+  class AmountWidget {
+    constructor(element) {
+      const thisWidget = this;
+      thisWidget.getElements(element);
+      thisWidget.setValue(thisWidget.input.value);
+      thisWidget.initActions();
+      console.log('AmountWidget', thisWidget);
+      console.log('constructor arguments:', element);
+    }
+    getElements(element){
+      const thisWidget = this;
+
+      thisWidget.element = element;
+      thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
+      thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
+      thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
+    }
+    setValue(value){
+      const thisWidget = this;
+      const newValue = parseInt(value);
+
+      /* TODO: Add validation */
+      if((thisWidget.value != newValue) && (newValue >= settings.amountWidget.defaultMin) && (newValue <= settings.amountWidget.defaultMax)) {
+        thisWidget.value = newValue;
+        thisWidget.announce();
+      }
+
+      thisWidget.input.value = thisWidget.value;
+    }
+    initActions() {
+      const thisWidget = this;
+      thisWidget.input.addEventListener('change', function() {
+        thisWidget.setValue(thisWidget.input.value);
+      });
+      thisWidget.linkDecrease.addEventListener('click', function(event) {
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.value-1);
+        console.log('działa 1');
+      });
+      thisWidget.linkIncrease.addEventListener('click', function(event) {
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.value+1);
+        console.log('thiswidget', thisWidget);
+      });
+    }
+    announce() {
+      const thisWidget = this;
+      const event = new Event('updated');
+      thisWidget.element.dispatchEvent(event);
+    }
+
   }
 
   const app = {
@@ -163,18 +225,17 @@
       const thisApp = this;
 
       thisApp.data = dataSource;
-      console.log('thisApp.data:', thisApp.data);
       for (let productData in thisApp.data.products) {
         new Product(productData, thisApp.data.products[productData]);
       }
     },
     init: function () {
       const thisApp = this;
-      console.log('*** App starting ***');
-      console.log('thisApp:', thisApp);
-      console.log('classNames:', classNames);
-      console.log('settings:', settings);
-      console.log('templates:', templates);
+      //console.log('*** App starting ***');
+      //console.log('thisApp:', thisApp);
+      //console.log('classNames:', classNames);
+      //console.log('settings:', settings);
+      //console.log('templates:', templates);
 
       thisApp.initData();
       thisApp.initMenu();
