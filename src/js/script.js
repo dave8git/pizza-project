@@ -141,13 +141,18 @@
         event.preventDefault();
         thisProduct.processOrder();
       });
-      console.log('initOrderForm');
+      //console.log('initOrderForm');
     }
     processOrder() {
       const thisProduct = this;
       const formData = utils.serializeFormToObject(thisProduct.form); /* read all data from the form (using utils.serializeFormToObject) and save it to const formData */
       let price = thisProduct.data.price; /* set variable price to equal thisProduct.data.price */
+      console.log('price1', price);
+      console.log('thisProduct.data.price', thisProduct.data.price);
+      console.log('dupa', thisProduct.amountWidget);
       price *= thisProduct.amountWidget.value;
+      console.log('price', price);
+      console.log('thisProduct.amountWidgetElem.value;', thisProduct.amountWidgetElem.value);
       for (let paramId in thisProduct.data.params) {
         /* START LOOP: for each paramId in thisProduct.data.params */
         const param = thisProduct.data.params[paramId]; /* save the element in thisProduct.data.params with key paramId as const param */
@@ -156,13 +161,13 @@
           const option = param.options[optionId]; /* save the element in param.options with key optionId as const option */
           const optionSelected = formData.hasOwnProperty(paramId) && formData[paramId].indexOf(optionId) > -1;
           const activeImages = thisProduct.imageWrapper.querySelectorAll('.' + paramId + '-' + optionId);
-          console.log(activeImages);
+          //console.log(activeImages);
           if (optionSelected && !option.default) {
             /* START IF: if option is selected and option is not default */
-            price += option.price; /* add price of option to variable price */
+            price += thisProduct.amountWidget.value === 1 ? option.price : option.price * thisProduct.amountWidget.value; /* add price of option to variable price */
           } else if (!optionSelected && option.default) {
             /* END IF: if option is selected and option is not default */ /* START ELSE IF: if option is not selected and option is default */
-            price -= option.price; /* deduct price of option from price */
+            price -= thisProduct.amountWidget.value === 1 ? option.price : option.price * thisProduct.amountWidget.value; /* deduct price of option from price */
           }
           if (optionSelected) {
             for (let activeImage of activeImages) {
@@ -180,12 +185,22 @@
       }
       /* END LOOP: for each paramId in thisProduct.data.params */
 
-      thisProduct.priceElem.innerHTML = price; /* set the contents of thisProduct.priceElem to be the value of variable price */
+
+      /* multiply price by amount */
+    thisProduct.priceSingle = price;
+    thisProduct.price = thisProduct.priceSingle * thisProduct.amountWidget.value;
+
+    /* set the contents of thisProduct.priceElem to be the value of variable price */
+    thisProduct.priceElem.innerHTML = thisProduct.price;
+    thisProduct.priceElem.innerHTML = price; /* set the contents of thisProduct.priceElem to be the value of variable price */
+
+
+
     }
     initAmountWdget() {
       const thisProduct = this;
 
-      thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
+      thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem, thisProduct.data.price);
       thisProduct.amountWidgetElem.addEventListener('updated', function () {
         thisProduct.processOrder();
       });
@@ -194,19 +209,23 @@
   }
 
   class AmountWidget {
-    constructor(element) {
+    constructor(element, productPrice) {
       const thisWidget = this;
       thisWidget.getElements(element);
-      thisWidget.setValue(thisWidget.input.value);
+      thisWidget.setValue(settings.amountWidget.defaultValue);
+      //thisWidget.setValue(thisWidget.input.value);
+      console.log('WIDGET', thisWidget.input.value);
       thisWidget.initActions();
-      console.log('AmountWidget', thisWidget);
-      console.log('constructor arguments:', element);
+      //console.log('AmountWidget', thisWidget);
+      //console.log('constructor arguments:', element);
     }
     getElements(element) {
       const thisWidget = this;
 
       thisWidget.element = element;
+      console.log(thisWidget.element);
       thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
+      console.log(thisWidget.input);
       thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
       thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
     }
@@ -230,12 +249,12 @@
       thisWidget.linkDecrease.addEventListener('click', function (event) {
         event.preventDefault();
         thisWidget.setValue(thisWidget.value - 1);
-        console.log('działa 1');
+        //console.log('działa 1');
       });
       thisWidget.linkIncrease.addEventListener('click', function (event) {
         event.preventDefault();
         thisWidget.setValue(thisWidget.value + 1);
-        console.log('thiswidget', thisWidget);
+        //console.log('thiswidget', thisWidget);
       });
     }
     announce() {
@@ -252,7 +271,7 @@
       thisCart.products = [];
       thisCart.getElements(element);
       thisCart.initActions();
-      console.log('new Cart', thisCart);
+      //console.log('new Cart', thisCart);
     }
     getElements(element) {
       const thisCart = this;
