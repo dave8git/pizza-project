@@ -140,19 +140,14 @@
       thisProduct.cartButton.addEventListener('click', function (event) {
         event.preventDefault();
         thisProduct.processOrder();
+        thisProduct.addToCart();
       });
-      //console.log('initOrderForm');
     }
     processOrder() {
       const thisProduct = this;
       const formData = utils.serializeFormToObject(thisProduct.form); /* read all data from the form (using utils.serializeFormToObject) and save it to const formData */
       let price = thisProduct.data.price; /* set variable price to equal thisProduct.data.price */
-      console.log('price1', price);
-      console.log('thisProduct.data.price', thisProduct.data.price);
-      console.log('dupa', thisProduct.amountWidget);
-      price *= thisProduct.amountWidget.value;
-      console.log('price', price);
-      console.log('thisProduct.amountWidgetElem.value;', thisProduct.amountWidgetElem.value);
+
       for (let paramId in thisProduct.data.params) {
         /* START LOOP: for each paramId in thisProduct.data.params */
         const param = thisProduct.data.params[paramId]; /* save the element in thisProduct.data.params with key paramId as const param */
@@ -161,13 +156,14 @@
           const option = param.options[optionId]; /* save the element in param.options with key optionId as const option */
           const optionSelected = formData.hasOwnProperty(paramId) && formData[paramId].indexOf(optionId) > -1;
           const activeImages = thisProduct.imageWrapper.querySelectorAll('.' + paramId + '-' + optionId);
-          //console.log(activeImages);
           if (optionSelected && !option.default) {
             /* START IF: if option is selected and option is not default */
-            price += thisProduct.amountWidget.value === 1 ? option.price : option.price * thisProduct.amountWidget.value; /* add price of option to variable price */
+            price += option.price;
+            //price += thisProduct.amountWidget.value === 1 ? option.price : option.price * thisProduct.amountWidget.value; /* add price of option to variable price */
           } else if (!optionSelected && option.default) {
             /* END IF: if option is selected and option is not default */ /* START ELSE IF: if option is not selected and option is default */
-            price -= thisProduct.amountWidget.value === 1 ? option.price : option.price * thisProduct.amountWidget.value; /* deduct price of option from price */
+            price -= option.price;
+            //price -= thisProduct.amountWidget.value === 1 ? option.price : option.price * thisProduct.amountWidget.value; /* deduct price of option from price */
           }
           if (optionSelected) {
             for (let activeImage of activeImages) {
@@ -183,19 +179,16 @@
         }
         /* END LOOP: for each optionId in param.options */
       }
+
       /* END LOOP: for each paramId in thisProduct.data.params */
 
 
       /* multiply price by amount */
     thisProduct.priceSingle = price;
+    price *= thisProduct.amountWidget.value;
     thisProduct.price = thisProduct.priceSingle * thisProduct.amountWidget.value;
-
     /* set the contents of thisProduct.priceElem to be the value of variable price */
-    thisProduct.priceElem.innerHTML = thisProduct.price;
-    thisProduct.priceElem.innerHTML = price; /* set the contents of thisProduct.priceElem to be the value of variable price */
-
-
-
+    thisProduct.priceElem.innerHTML = thisProduct.price;  /* set the contents of thisProduct.priceElem to be the value of variable price */
     }
     initAmountWdget() {
       const thisProduct = this;
@@ -206,6 +199,11 @@
       });
 
     }
+    addToCart() {
+      const thisProduct = this.product;
+
+      app.cart.add(thisProduct);
+    }
   }
 
   class AmountWidget {
@@ -213,19 +211,13 @@
       const thisWidget = this;
       thisWidget.getElements(element);
       thisWidget.setValue(settings.amountWidget.defaultValue);
-      //thisWidget.setValue(thisWidget.input.value);
-      console.log('WIDGET', thisWidget.input.value);
       thisWidget.initActions();
-      //console.log('AmountWidget', thisWidget);
-      //console.log('constructor arguments:', element);
     }
     getElements(element) {
       const thisWidget = this;
 
       thisWidget.element = element;
-      console.log(thisWidget.element);
       thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
-      console.log(thisWidget.input);
       thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
       thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
     }
@@ -249,12 +241,10 @@
       thisWidget.linkDecrease.addEventListener('click', function (event) {
         event.preventDefault();
         thisWidget.setValue(thisWidget.value - 1);
-        //console.log('działa 1');
       });
       thisWidget.linkIncrease.addEventListener('click', function (event) {
         event.preventDefault();
         thisWidget.setValue(thisWidget.value + 1);
-        //console.log('thiswidget', thisWidget);
       });
     }
     announce() {
@@ -285,10 +275,16 @@
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
       });
     }
+    add(menuProduct){
+      // const thisCart = this;
+
+      console.log('adding product', menuProduct);
+    }
   }
   const app = {
     initMenu: function () {
-      //const testProduct = new Product(); //
+      //const testProduct = new Product();
+
       //console.log('testProduct:', testProduct);
     },
     initData: function () {
