@@ -97,6 +97,7 @@
       thisProduct.element = utils.createDOMFromHTML(generatedHTML); /* create element using utils.createElementFromHTML */
       const menuContainer = document.querySelector(select.containerOf.menu);
       menuContainer.appendChild(thisProduct.element); /* add element to menu */
+
     }
     getElements() {
       const thisProduct = this;
@@ -146,6 +147,7 @@
     processOrder() {
       const thisProduct = this;
       const formData = utils.serializeFormToObject(thisProduct.form); /* read all data from the form (using utils.serializeFormToObject) and save it to const formData */
+      thisProduct.params = {};
       let price = thisProduct.data.price; /* set variable price to equal thisProduct.data.price */
 
       for (let paramId in thisProduct.data.params) {
@@ -166,6 +168,15 @@
             //price -= thisProduct.amountWidget.value === 1 ? option.price : option.price * thisProduct.amountWidget.value; /* deduct price of option from price */
           }
           if (optionSelected) {
+            if(!thisProduct.params[paramId]) {
+              thisProduct.params[paramId] = {
+                label: param.label,
+                options: {},
+              };
+            }
+            thisProduct.params[paramId].options[option.id] = option.label;
+
+            console.log('thisProduct.params', thisProduct.params);
             for (let activeImage of activeImages) {
               activeImage.classList.add(classNames.menuProduct.imageVisible);
             }
@@ -200,8 +211,9 @@
 
     }
     addToCart() {
-      const thisProduct = this.product;
-
+      const thisProduct = this;
+      thisProduct.name = thisProduct.data.name;
+      thisProduct.amount = thisProduct.amountWidget.value;
       app.cart.add(thisProduct);
     }
   }
@@ -276,8 +288,11 @@
       });
     }
     add(menuProduct){
-      // const thisCart = this;
-
+      const thisCart = this;
+      const generatedHTML = templates.cartProduct(menuProduct); /* generate HTML based on template */
+      const generatedDOM = utils.createDOMFromHTML(generatedHTML); /* create element using utils.createElementFromHTML */
+      const cartContainer = document.querySelector(select.cart.productList);
+      cartContainer.appendChild(generatedDOM); /* add element to menu */
       console.log('adding product', menuProduct);
     }
   }
