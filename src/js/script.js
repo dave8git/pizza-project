@@ -331,7 +331,7 @@
       };
       for (let product in payload.products) {
         payload.products.push(product.getData());
-      };
+      }
 
       const options = {
         method: 'POST',
