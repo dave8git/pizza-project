@@ -7,6 +7,7 @@ export const select = {
   containerOf: {
     menu: '#product-list',
     cart: '#cart',
+    pages: '#pages'
   },
   all: {
     menuProducts: '#product-list > .product',
@@ -46,6 +47,9 @@ export const select = {
     edit: '[href="#edit"]',
     remove: '[href="#remove"]',
   },
+  nav: {
+    links: '.main-nav a',
+  }
 };
 
 export const classNames = {
@@ -56,6 +60,9 @@ export const classNames = {
   cart: {
     wrapperActive: 'active',
   },
+  pages: {
+    active: 'active',
+  }
 };
 
 export const settings = {

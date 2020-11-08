@@ -1,7 +1,6 @@
 import { settings, select, classNames, templates } from '../settings.js';
 import CartProduct from './CartProduct.js';
-import utils from '../utils.js';
-
+import { utils } from '../utils.js';
 
 class Cart {
   constructor(element) {
@@ -56,7 +55,7 @@ class Cart {
       deliveryFee: thisCart.deliveryFee,
       products: [],
     };
-    for (let product in payload.products) {
+    for (let product in thisCart.products) {
       payload.products.push(product.getData());
     }
 
