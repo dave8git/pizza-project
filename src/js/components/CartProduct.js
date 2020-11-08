@@ -36,6 +36,16 @@ class CartProduct {
     });
 
   }
+  getData() {
+    const thisCart = this;
+    return {
+      id: thisCart.id,
+      amount: thisCart.amount,
+      price: thisCart.price,
+      priceSingle: thisCart.priceSingle,
+      params: thisCart.params,
+    };
+  }
   remove() {
     const thisCartProduct = this;
     const event = new CustomEvent('remove', {

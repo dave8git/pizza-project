@@ -1,6 +1,7 @@
 import { settings, select, classNames, templates } from '../settings.js';
 import CartProduct from './CartProduct.js';
-import  utils  from '../utils.js';
+import utils from '../utils.js';
+
 
 class Cart {
   constructor(element) {
@@ -55,10 +56,11 @@ class Cart {
       deliveryFee: thisCart.deliveryFee,
       products: [],
     };
-    for (let product in thisCart.products) {
+    console.log(thisCart.products);
+    for (let product of thisCart.products) {
       payload.products.push(product.getData());
     }
-
+    console.log(payload.products);
     const options = {
       method: 'POST',
       headers: {
@@ -73,19 +75,8 @@ class Cart {
       }).then(function(parsedResponse) {
         console.log('parsedResponse', parsedResponse);
       });
-
-
   }
-  getData() {
-    const thisCart = this;
-    return {
-      id: thisCart.id,
-      amount: thisCart.amount,
-      price: thisCart.price,
-      priceSingle: thisCart.priceSingle,
-      params: thisCart.params,
-    };
-  }
+
 
   add(menuProduct) {
     const thisCart = this;

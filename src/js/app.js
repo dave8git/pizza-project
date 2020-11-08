@@ -7,26 +7,24 @@ const app = {
     const thisApp = this;
 
     thisApp.pages = document.querySelector(select.containerOf.pages).children;
-
+    thisApp.navLinks = document.querySelectorAll(select.nav.links);
     thisApp.activatePage(thisApp.pages[0].id);
-
-    thisApp.links = document.querySelector(select.nav.links);
   },
-  activatePage: function (pageId) {
-    const thisApp = this;
 
-    for (let page of thisApp.pages) { /* add class "active" to matching pages, remove from non-matching pages */
-      // if(page.id == pageId) {
-      //   page.classList.add(classNames.pages.active);
-      // } else {
-      //   page.classList.remove(classNames.pages.active);
-      // }
-      console.log(page);
+  activatePage: function(pageId) {
+    const thisApp = this;
+    for(let page of thisApp.pages) {
       page.classList.toggle(classNames.pages.active, page.id == pageId);
     }
 
-    /* add class "active" to matching links, remove from non-matching links */
+    for(let link of thisApp.navLinks) {
+      link.classList.toggle(
+        classNames.nav.active,
+        link.getAttribute('href') == '#' + pageId
+      );
+    }
   },
+
   initMenu: function () {
     const thisApp = this;
 
@@ -79,7 +77,7 @@ const app = {
 
     thisApp.initPages();
     thisApp.initData();
-    //thisApp.initMenu();
+    thisApp.initMenu();
     thisApp.initCart();
   },
 };
