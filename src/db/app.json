@@ -219,7 +219,7 @@
       "date": "2019-01-01",
       "hour": "16:00",
       "table": 3,
-      "repeat": "daily",
+      "repeat": "false",
       "duration": 2,
       "ppl": 3,
       "starters": ["bread", "lemonWater"]
@@ -229,7 +229,7 @@
       "date": "2019-01-01",
       "hour": "12:00",
       "table": 3,
-      "repeat": "daily",
+      "repeat": "false",
       "duration": 2,
       "ppl": 3,
       "starters": ["bread", "lemonWater"]
@@ -239,7 +239,7 @@
       "date": "2019-01-01",
       "hour": "13:00",
       "table": 4,
-      "repeat": "daily",
+      "repeat": "false",
       "duration": 4,
       "ppl": 3,
       "starters": []
@@ -249,7 +249,7 @@
       "date": "2019-01-01",
       "hour": "18:00",
       "table": 2,
-      "repeat": "daily",
+      "repeat": "false",
       "duration": 2,
       "ppl": 3,
       "starters": ["lemonWater"]

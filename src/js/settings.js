@@ -39,6 +39,15 @@ export const select = {
       input: 'input[type="range"]',
       output: '.output',
     },
+    address: {
+      input: 'input[name="address"]',
+    },
+    phone: {
+      input: 'input[name="phone"]',
+    },
+    buttonBook: {
+      book: '.order-confirmation [type="submit"]',
+    },
   },
   cart: {
     productList: '.cart__order-summary',
@@ -91,8 +100,8 @@ export const classNames = {
 
 export const settings = {
   hours: {
-    open: 12,
-    close: 24,
+    open: '12:00',
+    close: '24:00',
   },
   amountWidget: {
     defaultValue: 1,

@@ -47,6 +47,7 @@ class Cart {
     const thisCart = this;
     const url = settings.db.url + '/' + settings.db.order;
 
+    console.log('normal url', url);
     const payload = {
       totalPrice: thisCart.totalPrice,
       totalNumber: thisCart.totalNumber,

@@ -10,6 +10,7 @@ class Booking {
     thisBooking.render(element);
     thisBooking.initWidget();
     thisBooking.getData();
+    thisBooking.selectTable();
   }
   getData() {
     const thisBooking = this;
@@ -153,6 +154,9 @@ class Booking {
     thisBooking.dom.datePicker = thisBooking.dom.wrapper.querySelector(select.widgets.datePicker.wrapper);
     thisBooking.dom.hourPicker = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
     thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
+    thisBooking.dom.address = thisBooking.dom.wrapper.querySelector(select.widgets.address.input);
+    thisBooking.dom.phone = thisBooking.dom.wrapper.querySelector(select.widgets.address.input);
+    thisBooking.dom.buttonOrder = thisBooking.dom.wrapper.querySelector(select.widgets.buttonBook.book);
   }
   initWidget() {
     const thisBooking = this;
@@ -163,6 +167,58 @@ class Booking {
     thisBooking.dom.wrapper.addEventListener('updated', function(){
       thisBooking.updateDOM();
     });
+    thisBooking.dom.buttonOrder.addEventListener('click', function (event) {
+      event.preventDefault();
+      thisBooking.sendBooking();
+    });
+  }
+
+  selectTable() {
+    const thisBooking = this;
+    console.log('dupadupa', thisBooking);
+    console.log('thisBooking.dom.starters', thisBooking.dom.starters);
+    console.log('button', thisBooking.dom.wrapper.querySelector(select.widgets.buttonBook.book));
+    thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
+    for(let table of thisBooking.dom.tables) {
+      table.addEventListener('click', function() {
+        table.classList.toggle('.selected');
+        console.log(thisBooking);
+      }); //console.log('co jest grane?', table);
+    }
+  }
+
+  sendBooking() {
+    const thisBooking = this;
+    console.log(thisBooking);
+    console.log('sendiiiiing!!!!!!!');
+    const url = settings.db.url + '/' + settings.db.booking;
+    console.log('booking url', url);
+    const payload = {
+      date: thisBooking.date,
+      //hour: thisBooking.hourPicker.input.value,
+      table: [],
+      repeat: thisBooking.repeat,
+      duration: thisBooking.hoursAmount.value,
+      ppl: thisBooking.peopleAmount.value,
+      starters: [],
+      address: thisBooking.dom.address.value,
+      phone: thisBooking.dom.phone.value,
+    };
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    };
+
+    fetch(url, options)
+      .then(function(response) {
+        return response.json();
+      }).then(function(parsedResponse) {
+        console.log('parsedResponse', parsedResponse);
+      });
   }
 }
 
