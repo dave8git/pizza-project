@@ -188,7 +188,6 @@ class Booking {
         console.log(thisBooking);
       });
     }
-
   }
 
   sendBooking() {
