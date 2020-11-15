@@ -200,7 +200,7 @@ class Booking {
 
     const payload = {
       date: thisBooking.date,
-      //hour: thisBooking.hourPicker.input.value,
+      hour: utils.numberToHour(thisBooking.hour),
       table: [],
       repeat: thisBooking.repeat,
       duration: thisBooking.hoursAmount.value,
