@@ -186,7 +186,7 @@ class Booking {
         table.classList.toggle('selected');
         console.log('selected table', table);
         console.log(thisBooking);
-      }); //console.log('co jest grane?', table);
+      });
     }
 
   }
@@ -212,7 +212,7 @@ class Booking {
 
 
     for (let starter of thisBooking.dom.starters) {
-      console.log('działaaaaaaa;');
+      console.log('thisBooking.dom.starters');
       if (starter.checked == true) {
         const starterValue = starter.value;
         payload.starters.push(starterValue);
