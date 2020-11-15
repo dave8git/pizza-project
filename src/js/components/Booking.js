@@ -157,6 +157,8 @@ class Booking {
     thisBooking.dom.address = thisBooking.dom.wrapper.querySelector(select.widgets.address.input);
     thisBooking.dom.phone = thisBooking.dom.wrapper.querySelector(select.widgets.address.input);
     thisBooking.dom.buttonOrder = thisBooking.dom.wrapper.querySelector(select.widgets.buttonBook.book);
+    thisBooking.dom.starters = thisBooking.dom.wrapper.querySelectorAll(select.booking.starter);
+    console.log('thisBooking.dom.starters starting', thisBooking.dom.starters);
   }
   initWidget() {
     const thisBooking = this;
@@ -181,10 +183,12 @@ class Booking {
     thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
     for(let table of thisBooking.dom.tables) {
       table.addEventListener('click', function() {
-        table.classList.toggle('.selected');
+        table.classList.toggle('selected');
+        console.log('selected table', table);
         console.log(thisBooking);
       }); //console.log('co jest grane?', table);
     }
+
   }
 
   sendBooking() {
@@ -193,6 +197,7 @@ class Booking {
     console.log('sendiiiiing!!!!!!!');
     const url = settings.db.url + '/' + settings.db.booking;
     console.log('booking url', url);
+
     const payload = {
       date: thisBooking.date,
       //hour: thisBooking.hourPicker.input.value,
@@ -204,6 +209,29 @@ class Booking {
       address: thisBooking.dom.address.value,
       phone: thisBooking.dom.phone.value,
     };
+
+
+    for (let starter of thisBooking.dom.starters) {
+      console.log('działaaaaaaa;');
+      if (starter.checked == true) {
+        const starterValue = starter.value;
+        payload.starters.push(starterValue);
+
+      }
+    }
+
+    for (let table of thisBooking.dom.tables) {
+      console.log('table', table);
+      const tableNo = table.getAttribute('data-table');
+      const tableId = parseInt(tableNo);
+      console.log(tableId);
+      if (table.classList.contains('selected')) {
+        payload.table.push(tableId);
+        table.classList.replace('selected', 'booked');
+      }
+    }
+
+
 
     const options = {
       method: 'POST',
