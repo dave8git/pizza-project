@@ -5,12 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Pizzeria</title>
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,300i,700%7COswald:300,500,700&amp;subset=latin-ext" rel="stylesheet">
+  <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
   <link rel="stylesheet" href="./vendor/range-slider.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link href="https://fonts.googleapis.com/css?family=Lato:400,300i,700%7COswald:300,500,700&amp;subset=latin-ext"
     rel="stylesheet">
   <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="header">
@@ -21,6 +25,7 @@
           <h2 class="logo__subtitle">the best homemade Italian food</h2>
         </div>
         <div class="main-nav">
+          <a href="#home">Home</a>
           <a href="#order">Order</a>
           <a href="#booking">Booking</a>
         </div>
@@ -62,6 +67,128 @@
   </header>
 
   <div id="pages">
+    <section id="home">
+      <div class="home-wrapper container">
+        <section class="intro">
+          <div class="container-normal">
+              <div class="intro-row">
+              <div class="wrapper-picture-seciton image secondary-nav">
+                  <img class="image__img" src="https://images.pexels.com/photos/845798/pexels-photo-845798.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="pizza">
+                  <a href="#order">
+                    <div class="image__overlay">
+                      <div class="image__title">ORDER ONLINE</div>
+                       <p class="image__description">
+                           Here we have a brick wall.
+                       </p>
+                  </div>
+                </a>
+              </div>
+              <div class="wrapper-picture-seciton image secondary-nav">
+                  <img class="image__img" src="https://images.pexels.com/photos/1143754/pexels-photo-1143754.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="pizza">
+                  <a href="#booking">
+                  <div class="image__overlay">
+                      <div class="image__title">BOOK A TABLE</div>
+                       <p class="image__description">
+                           Here we have a brick wall.
+                       </p>
+                  </div>
+                </a>
+              </div>
+
+              </div>
+              <div class="intro-row flex-column flex-center hello-intro-row">
+                  <h1>Opening Hours:</h1>
+                  <h5>TUE SUN 12PM 12AM</h5>
+              </div>
+          </div>
+     </section>
+     <div id="carouselExampleSlidesOnly" class="carousel slide container-normal" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="display-flex margin-photo-text">
+              <img src="https://images.pexels.com/photos/1398688/pexels-photo-1398688.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" class="" alt="pizza">
+                  <div class="inner-test-section">
+                      <h5>Awesome food!</h5>
+                      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores rerum assumenda aliquam sit laborum exercitationem explicabo nihil voluptatem ratione commodi? Lorem, ipsum dolor.</p>
+                      <p>- Dorota Lepszy</p>
+                  </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+          <div class="display-flex margin-photo-text">
+            <img src="https://images.pexels.com/photos/1239312/pexels-photo-1239312.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" class="" alt="pizza">
+            <div class="inner-test-section">
+              <h5>Friendly folks!</h5>
+              <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatum, error? Officiis odio corrupti quis saepe reprehenderit enim ut explicabo, quod quo aliquid eligendi illo!</p>
+              <p>- Marian Mireczek</p>
+            </div>
+          </div>
+      </div>
+      <div class="carousel-item">
+          <div class="display-flex margin-photo-text">
+              <img src="https://images.pexels.com/photos/47306/pasta-spaghetti-noodle-pasta-nests-47306.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" class="" alt="pizza">
+              <div class="inner-test-section">
+                  <h5>Amazing place!</h5>
+                  <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestias voluptates itaque in amet explicabo ratione fugiat consequuntur voluptate, corporis nemo reprehenderit cum blanditiis aspernatur alias.</p>
+                  <p>- Michał Kołak</p>
+              </div>
+          </div>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+      </div>
+    </div>
+
+      <section class="gallery">
+          <div class="container-normal">
+              <div class="gallery-area">
+                  <div class="single-img">
+                      <img src="https://images.pexels.com/photos/1049620/pexels-photo-1049620.jpeg?cs=srgb&dl=pexels-edward-eyer-1049620.jpg&fm=jpg" alt="">
+                      <div class="overlay">
+                        <i class="fas fa-cart-plus"></i>
+                    </div>
+                    </div>
+                  <div class="single-img">
+                      <img src="https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="">
+                      <div class="overlay">
+                        <i class="fas fa-cart-plus"></i>
+                    </div>
+                    </div>
+                  <div class="single-img">
+                      <img src="https://images.pexels.com/photos/262905/pexels-photo-262905.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="">
+                      <div class="overlay">
+                        <i class="fas fa-cart-plus"></i>
+                    </div>
+                  </div>
+                  <div class="single-img">
+                      <img src="https://images.pexels.com/photos/2532006/pexels-photo-2532006.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="">
+                      <div class="overlay">
+                        <i class="fas fa-cart-plus"></i>
+                    </div>
+                  </div>
+                  <div class="single-img">
+                      <img src="https://images.pexels.com/photos/257794/pexels-photo-257794.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="">
+                      <div class="overlay">
+                        <i class="fas fa-cart-plus"></i>
+                    </div>
+                  </div>
+                  <div class="single-img">
+                      <img src="https://images.pexels.com/photos/769969/pexels-photo-769969.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="">
+                      <div class="overlay">
+                        <i class="fas fa-cart-plus"></i>
+                    </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+      </div>
+    </section>
     <section id="order">
       <div id="product-list" class="product-list container"></div>
     </section>
@@ -242,6 +369,9 @@
 
     </article> <!-- .product -->
   </script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
   <script src="./vendor/range-slider.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>

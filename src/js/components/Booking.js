@@ -177,7 +177,7 @@ class Booking {
 
   selectTable() {
     const thisBooking = this;
-    console.log('dupadupa', thisBooking);
+    console.log('thisBooking - console', thisBooking);
     console.log('thisBooking.dom.starters', thisBooking.dom.starters);
     console.log('button', thisBooking.dom.wrapper.querySelector(select.widgets.buttonBook.book));
     thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
@@ -230,8 +230,6 @@ class Booking {
         table.classList.replace('selected', 'booked');
       }
     }
-
-
 
     const options = {
       method: 'POST',
