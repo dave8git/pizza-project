@@ -124,21 +124,21 @@ class Booking {
     ) {
       allAvailable = true;
     }
-    // for(let table of thisBooking.dom.tables) {
-    //   let tableId = table.getAttribute(settings.booking.tableIdAttribute);
-    //   if(!isNaN(tableId)) {
-    //     tableId = parseInt(tableId);
-    //   }
-    //   if(
-    //     !allAvailable
-    //     &&
-    //     thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId) > -1
-    //   ){
-    //     table.classList.add(classNames.booking.tableBooked);
-    //   } else {
-    //     table.classList.remove(classNames.booking.tableBooked);
-    //   }
-    // }
+    for(let table of thisBooking.dom.tables) {
+      let tableId = table.getAttribute('data-table');
+      if(!isNaN(tableId)) {
+        tableId = parseInt(tableId);
+      }
+      if(
+        !allAvailable
+        &&
+        thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId) > -1
+      ){
+        table.classList.add(classNames.booking.tableBooked);
+      } else {
+        table.classList.remove(classNames.booking.tableBooked);
+      }
+    }
   }
   render(element) {
     const thisBooking = this;
@@ -181,23 +181,18 @@ class Booking {
     console.log('thisBooking.dom.starters', thisBooking.dom.starters);
     console.log('button', thisBooking.dom.wrapper.querySelector(select.widgets.buttonBook.book));
     thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
-    // for(let table of thisBooking.dom.tables) {
-    //   console.log(table);
-    //   if(!table.classList.contains('booked')) {
-    //     //table.classList.remove('selected');
-    //     table.addEventListener('click', function() {
-    //       table.classList.toggle('selected');
-    //       console.log('selected table', table);
-    //       console.log(thisBooking);
-    //     });
-    //   } else {
-    //     console.log('jest klasa');
-    //   }
-    // }
-    for (let table of thisBooking.dom.tables) {
-      table.addEventListener('click', function () {
-        table.classList.add('selected');
-      });
+    for(let table of thisBooking.dom.tables) {
+      console.log(table);
+      if(!table.classList.contains('booked')) {
+        //table.classList.remove('selected');
+        table.addEventListener('click', function() {
+          table.classList.toggle('selected');
+          console.log('selected table', table);
+          console.log(thisBooking);
+        });
+      } else {
+        console.log('jest klasa');
+      }
     }
   }
 
