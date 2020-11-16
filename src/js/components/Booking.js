@@ -132,7 +132,7 @@ class Booking {
       if(
         !allAvailable
         &&
-        thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId) > -1
+        thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId)
       ){
         table.classList.add(classNames.booking.tableBooked);
       } else {
@@ -206,7 +206,7 @@ class Booking {
     const payload = {
       date: thisBooking.date,
       hour: utils.numberToHour(thisBooking.hour),
-      table: [],
+      table: '',
       repeat: thisBooking.repeat,
       duration: thisBooking.hoursAmount.value,
       ppl: thisBooking.peopleAmount.value,
