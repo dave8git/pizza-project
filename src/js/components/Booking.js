@@ -182,11 +182,16 @@ class Booking {
     console.log('button', thisBooking.dom.wrapper.querySelector(select.widgets.buttonBook.book));
     thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
     for(let table of thisBooking.dom.tables) {
-      table.addEventListener('click', function() {
-        table.classList.toggle('selected');
-        console.log('selected table', table);
-        console.log(thisBooking);
-      });
+      console.log(table);
+      if(!table.classList.contains('booked')) {
+        table.addEventListener('click', function() {
+          table.classList.toggle('selected');
+          console.log('selected table', table);
+          console.log(thisBooking);
+        });
+      } else {
+        console.log('jest klasa');
+      }
     }
   }
 
@@ -228,6 +233,7 @@ class Booking {
         payload.table.push(tableId);
         table.classList.replace('selected', 'booked');
       }
+      console.log('tables in payload', payload.table);
     }
 
     const options = {
@@ -243,6 +249,8 @@ class Booking {
         return response.json();
       }).then(function(parsedResponse) {
         console.log('parsedResponse', parsedResponse);
+        thisBooking.makeBooked(payload.date, payload.hour, payload.duration, payload.table);
+        thisBooking.updateDOM();
       });
   }
 }
