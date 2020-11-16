@@ -231,7 +231,7 @@ class Booking {
       const tableId = parseInt(tableNo);
       console.log(tableId);
       if (table.classList.contains('selected')) {
-        payload.table.push(tableId);
+        payload.table = tableId;
         table.classList.replace('selected', 'booked');
       }
       //console.log('tables in payload', payload.table);
@@ -251,7 +251,7 @@ class Booking {
       }).then(function(parsedResponse) {
         console.log('parsedResponse', parsedResponse);
         thisBooking.makeBooked(payload.date, payload.hour, payload.duration, payload.table);
-        thisBooking.updateDOM();
+        //thisBooking.updateDOM();
       });
   }
 }
