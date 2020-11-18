@@ -262,14 +262,14 @@ class Booking {
 
   colorSlider() {
     const thisBooking = this;
-    //const rangeSlider = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
+    const rangeSlider = document.querySelector('.rangeSlider__horizontal');
     //const bookedDate = thisBooking.booked.date;
     let colors = 'linear-gradient(to right';
     let progress = 0;
     let next = 4.2;
 
     for (let timeOfBooking = 12; timeOfBooking <= 24; timeOfBooking += 0.5) {
-      if ((typeof thisBooking.booked[thisBooking.date][thisBooking.hour] === 'undefined') || (thisBooking.booking[thisBooking.date] === 'undefined')) {
+      if ((thisBooking.booked[thisBooking.date][thisBooking.hour]) || (thisBooking.booking[thisBooking.date])) {
         let nextValue = progress + next;
         colors += ',#006400' + ' ' + progress + '%' + ' ' + nextValue + '%';
         progress += next;
@@ -285,7 +285,7 @@ class Booking {
     }
     colors += ')';
     console.log(colors);
-    //thisBooking.rangeSlider.css('background-image', colors);
+    rangeSlider.style.backgroundImage = colors;
   }
 }
 
