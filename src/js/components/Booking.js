@@ -263,7 +263,6 @@ class Booking {
   colorSlider() {
     const thisBooking = this;
     const rangeSlider = document.querySelector('.rangeSlider__horizontal');
-    //const bookedDate = thisBooking.booked.date;
     let colors = 'linear-gradient(to right';
     let progress = 0;
     let next = 4.2;
