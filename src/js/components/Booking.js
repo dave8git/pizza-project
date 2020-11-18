@@ -269,7 +269,7 @@ class Booking {
     let next = 4.2;
 
     for (let timeOfBooking = 12; timeOfBooking <= 24; timeOfBooking += 0.5) {
-      if ((thisBooking.booked[thisBooking.date][thisBooking.hour]) || (thisBooking.booking[thisBooking.date])) {
+      if ((typeof thisBooking.booked[thisBooking.date][thisBooking.hour] === 'undefined') || (typeof thisBooking.booking[thisBooking.date]) === 'undefined') {
         let nextValue = progress + next;
         colors += ',#006400' + ' ' + progress + '%' + ' ' + nextValue + '%';
         progress += next;
